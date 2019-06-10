@@ -1,4 +1,4 @@
-package com.example.mura.example1.presenter
+package com.example.mura.example1.view
 
 
 import android.os.Bundle
@@ -9,21 +9,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.example.mura.example1.R
-import com.example.mura.example1.model.mad
 import kotlinx.android.synthetic.main.list_item.view.*
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
  *
  */
 class RecyclerFragment : Fragment() {
+
+    companion object{
+        const val ARG_VKUser = "VKUser"
+        @JvmStatic
+        fun newInstance(data:ArrayList<Int>) = RecyclerFragment().apply{
+            arguments = Bundle().apply {
+                putSerializable(ARG_VKUser,data)
+            }
+
+        }
+    }
 
     private lateinit var mRecyclerView : RecyclerView
     private var mAdapter: TextAdapter? = null
@@ -36,22 +42,33 @@ class RecyclerFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_recycler, container, false)
         mRecyclerView = view.findViewById(R.id.recyclerview)
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
-        updateUi()
+        //получаем данные
+        updateUi(arguments?.getSerializable(ARG_VKUser) as ArrayList<Int>)
         return view
     }
 
-    private fun updateUi() {
-        val textData = mad("murad")
-        val date = textData.createDate()
-        mAdapter = TextAdapter(date)
+    //получаем данные и уставливаем адаптер для recyclerView
+    private fun updateUi(data:ArrayList<Int>) {
+        mAdapter = TextAdapter(data)
         mRecyclerView.adapter = mAdapter
     }
 
-    private inner class TextHolder(val mView: View) : RecyclerView.ViewHolder(mView){
+    private inner class TextHolder( mView: View) : RecyclerView.ViewHolder(mView),View.OnClickListener{
+        //click
+        init {
+            mView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            Toast.makeText(activity,"work",Toast.LENGTH_LONG).show()
+        }
+
+        //связываиние textView и передоваемого текста
         val mTextView: TextView = mView.text
     }
 
     private inner class TextAdapter(dat: ArrayList<Int>): RecyclerView.Adapter<TextHolder>(){
+        //данные
         private val dateMad = dat
 
         override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TextHolder {
@@ -59,15 +76,18 @@ class RecyclerFragment : Fragment() {
             return TextHolder(view)
         }
 
+        //кол-во элементов
         override fun getItemCount(): Int {
             return  dateMad.size
         }
 
+        //Вывод данных на экран
         override fun onBindViewHolder(p0: TextHolder, p1: Int) {
             p0.mTextView.text = dateMad[p1].toString()
         }
 
     }
+
 
 
 }
