@@ -1,3 +1,5 @@
+package com.example.mura.example1.model
+
 import android.os.Parcel
 import android.os.Parcelable
 import org.json.JSONObject

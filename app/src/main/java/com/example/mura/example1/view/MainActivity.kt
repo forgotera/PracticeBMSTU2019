@@ -13,14 +13,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createFragment()
-
-    }
-
-    private fun createFragment(){
         val fm = supportFragmentManager
-        val fragment = RecyclerFragment.newInstance(mMainPresenter.getData())
-        fm.beginTransaction().replace(R.id.fragmentСontainer,fragment).commit()
+        val fragment = RecyclerFragment()
+        fm.beginTransaction().add(R.id.fragmentСontainer,fragment).commit()
+
     }
 
     companion object {

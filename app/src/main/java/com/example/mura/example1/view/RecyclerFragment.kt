@@ -11,6 +11,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.example.mura.example1.R
+import com.example.mura.example1.model.VKFriendsRequest
+import com.example.mura.example1.model.VKUser
+import com.vk.api.sdk.VK
+import com.vk.api.sdk.VKApiCallback
+import com.vk.api.sdk.exceptions.VKApiExecutionException
 import kotlinx.android.synthetic.main.list_item.view.*
 
 
@@ -20,16 +25,20 @@ import kotlinx.android.synthetic.main.list_item.view.*
  */
 class RecyclerFragment : Fragment() {
 
-    companion object{
+
+    //fixme нужно передать сюда список VKUser, но bundle принимает только примитивы
+    //fixme передавать два отдельных массива для фото и имени?
+    /*companion object{
         const val ARG_VKUser = "VKUser"
         @JvmStatic
-        fun newInstance(data:ArrayList<Int>) = RecyclerFragment().apply{
+        fun newInstance(data:List<mad>) = RecyclerFragment().apply{
+            val mValue: List<mad> = data
             arguments = Bundle().apply {
-                putSerializable(ARG_VKUser,data)
+                putParcelable(ARG_VKUser, data)
             }
 
         }
-    }
+    }*/
 
     private lateinit var mRecyclerView : RecyclerView
     private var mAdapter: TextAdapter? = null
@@ -43,12 +52,26 @@ class RecyclerFragment : Fragment() {
         mRecyclerView = view.findViewById(R.id.recyclerview)
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
         //получаем данные
-        updateUi(arguments?.getSerializable(ARG_VKUser) as ArrayList<Int>)
+        request()
         return view
     }
 
+    //wtf вообще как сделать так чтобы запрос шел с model
+    //wtf данные с result не выходят за пределы object
+    private fun request(){
+        VK.execute(VKFriendsRequest(), object : VKApiCallback<List<VKUser>> {
+            override fun success(result: List<VKUser>) {
+                updateUi(result as MutableList<VKUser>)
+            }
+
+            override fun fail(error: VKApiExecutionException) {
+            }
+        })
+
+    }
+
     //получаем данные и уставливаем адаптер для recyclerView
-    private fun updateUi(data:ArrayList<Int>) {
+    private fun updateUi(data: MutableList<VKUser>) {
         mAdapter = TextAdapter(data)
         mRecyclerView.adapter = mAdapter
     }
@@ -67,7 +90,7 @@ class RecyclerFragment : Fragment() {
         val mTextView: TextView = mView.text
     }
 
-    private inner class TextAdapter(dat: ArrayList<Int>): RecyclerView.Adapter<TextHolder>(){
+    private inner class TextAdapter(dat: MutableList<VKUser>): RecyclerView.Adapter<TextHolder>(){
         //данные
         private val dateMad = dat
 
