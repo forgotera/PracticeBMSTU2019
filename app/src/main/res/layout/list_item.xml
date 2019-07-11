@@ -2,17 +2,27 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" android:orientation="vertical">
 
-    <TextView
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+
+
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/text"
-    />
+            android:layout_marginStart="16dp"
+        />
 
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/photo"
-    />
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/photo"
+                android:layout_marginLeft="8dp"
+        />
+    </LinearLayout>
 
 </LinearLayout>
