@@ -46,26 +46,19 @@ import java.net.SocketException
  * A simple [Fragment] subclass.
  *
  */
-class RecyclerFragment : Fragment() {
+interface RecyclerFragmentView{
+    fun updateUi(data: MutableList<VKUser>)
+}
 
+class RecyclerFragment : Fragment(), RecyclerFragmentView {
     private lateinit var mRecyclerView : RecyclerView
     private var mAdapter: FriendsListAdapter? = null
+    private var presenter: MainPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val mMainPresenter = MainPresenter().getClass()
-        mMainPresenter.getFriendList()
-    }
-
-    fun getClass(): RecyclerFragment {
-        Log.i("classRep1",this@RecyclerFragment.toString())
-        return this@RecyclerFragment
     }
 
     override fun onCreateView(
@@ -77,13 +70,18 @@ class RecyclerFragment : Fragment() {
         Log.i("recyclerView", view.toString())
         mRecyclerView = view.findViewById(R.id.recyclerview)
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
+        if (presenter == null){
+            presenter = MainPresenter(this)
+        }
+        presenter!!.getFriendList()
         return view
     }
 
     //получаем данные и уставливаем адаптер для recyclerView
-    fun updateUi(data: MutableList<VKUser>) {
+    override fun updateUi(data: MutableList<VKUser>) {
         mAdapter = FriendsListAdapter(data)
         mRecyclerView.adapter = mAdapter //Fixme 1 mRecyclerView = null, не выполняется onCreateView
+        mAdapter!!.notifyDataSetChanged()
     }
 
     private inner class FriendsListHolder( mView: View) : RecyclerView.ViewHolder(mView),View.OnClickListener{
@@ -119,14 +117,30 @@ class RecyclerFragment : Fragment() {
         override fun onBindViewHolder(p0: FriendsListHolder, p1: Int) {
             p0.mTextView.text = (friendList[p1]).firstName
             p0.mPhotoView.setImageDrawable(resources.getDrawable(R.drawable.baseline_photo_camera_black_18dp))
+            //fixme надо придумать как устнаовить в холдере скаченную картинку
+            presenter?.getFriendAvatar(friendList[p1].photo)
             Log.d("photo",friendList[p1].photo)
-            //downloadImage(friendList[p1].photo)
+            presenter
 
         }
 
 
 
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //все что ниже должно быть в model
 /*

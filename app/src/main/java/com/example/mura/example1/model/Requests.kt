@@ -37,17 +37,8 @@ interface ImageApi{
 
 
 class Requests{
-    private val observable = Observable.fromCallable {
+    val observable = Observable.fromCallable {
         VK.executeSync(VKFriendsRequest())
-    }
-
-    //запрос на сервер для получения данных
-
-    fun requestFriend() {
-        observable
-            .subscribeOn(Schedulers.single())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(MainPresenter().getObserver())
     }
 
 

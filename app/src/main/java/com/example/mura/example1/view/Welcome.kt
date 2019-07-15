@@ -20,7 +20,7 @@ class Welcome : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val callback = object: VKAuthCallback {
             override fun onLogin(token: VKAccessToken) {
-                MainPresenter().startMainActivity(this@Welcome)
+                MainActivity.startFrom(this@Welcome)
                 finish()
             }
 
