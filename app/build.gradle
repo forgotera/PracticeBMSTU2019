@@ -32,6 +32,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation "io.reactivex.rxjava2:rxjava:2.2.10"
     implementation 'com.vk:androidsdk:2.1.0'
     testImplementation 'junit:junit:4.12'

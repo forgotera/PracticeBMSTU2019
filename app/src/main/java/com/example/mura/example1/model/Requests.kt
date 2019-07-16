@@ -18,6 +18,7 @@ import retrofit2.http.GET
 import retrofit2.http.Url
 
 
+/*
 interface ImageApi{
     @GET
     fun getImage(@Url url: String): Observable<ByteArray>
@@ -34,6 +35,7 @@ interface ImageApi{
         }
     }
 }
+*/
 
 
 class Requests{
