@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         fm.beginTransaction().add(R.id.fragmentСontainer,fragment).commit()
     }
 
+
     companion object {
         private const val TAG = "MainActivity"
 

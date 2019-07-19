@@ -14,7 +14,7 @@ class Welcome : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //метод сам строит вью для авторизации
-        VK.login(this, arrayListOf(VKScope.WALL, VKScope.PHOTOS))
+        VK.login(this, arrayListOf(VKScope.FRIENDS, VKScope.PHOTOS))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

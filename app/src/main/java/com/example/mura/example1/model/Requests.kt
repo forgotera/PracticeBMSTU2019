@@ -1,21 +1,9 @@
 package com.example.mura.example1.model
 
 import android.util.Log
-import com.example.mura.example1.presenter.MainPresenter
+import com.example.mura.example1.view.UserActivity
 import com.vk.api.sdk.VK
 import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
-import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Url
 
 
 /*
@@ -39,8 +27,15 @@ interface ImageApi{
 
 
 class Requests{
+
     val observable = Observable.fromCallable {
         VK.executeSync(VKFriendsRequest())
+    }
+
+    fun photoRequest(userId:Int): Observable<List<VKPhoto>> {
+        return Observable.fromCallable {
+            VK.executeSync(VKPhotosRequest(userId))
+        }
     }
 
 
