@@ -53,8 +53,7 @@ class UserPresenter(val view:UserFragment) {
         Picasso.get()
             .load(url)
             .placeholder(com.example.mura.example1.R.drawable.baseline_photo_camera_black_18dp)
-            .resize(640,640)
-            .centerCrop()
+            .resize(510,714)
             .into(mPhotoView)
     }
 

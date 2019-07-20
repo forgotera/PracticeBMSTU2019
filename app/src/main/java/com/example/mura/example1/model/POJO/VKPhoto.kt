@@ -52,7 +52,7 @@ data class VKPhoto(
             ownerId = json.optInt("owner_id", 0),
             text = json.optString("text", ""),
             date = json.optInt("date", 0),
-            url = (json.getJSONArray("sizes")).getJSONObject(0).optString("url", ""),
+            url = (json.getJSONArray("sizes")).getJSONObject(4).optString("url", ""),
             likes_count = (json.getJSONObject("likes")).optInt("count", 0)
         )
     }
