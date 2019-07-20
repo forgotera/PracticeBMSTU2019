@@ -1,5 +1,6 @@
 package com.example.mura.example1.model
 
+import com.example.mura.example1.model.POJO.VKPhoto
 import com.vk.api.sdk.requests.VKRequest
 import org.json.JSONObject
 

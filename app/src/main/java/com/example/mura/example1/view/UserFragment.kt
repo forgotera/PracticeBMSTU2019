@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,9 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.example.mura.example1.R
-import com.example.mura.example1.model.VKPhoto
+import com.example.mura.example1.model.POJO.VKPhoto
 import com.example.mura.example1.presenter.UserPresenter
 import kotlinx.android.synthetic.main.list_item.view.*
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -28,6 +22,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class UserFragment : Fragment() {
 
+    //сохранение данных в bundle
     companion object{
         fun newInstance(userId:Int): UserFragment {
             val args = Bundle()
@@ -78,14 +73,11 @@ class UserFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: UserHolder, position: Int) {
-            Log.i("qwerwr",photoList[position].url)
-
             if(photoList[ position].url !="") {
                 holder.bindDrawable(photoList[position].url)
             }
-            holder.mTextView.text = (photoList[ position]).likes_count.toString()
+            holder.mTextView.text = ("Like: " + (photoList[ position]).likes_count.toString())
         }
-
 
         private inner class UserHolder(mView:View):RecyclerView.ViewHolder(mView){
 
@@ -97,6 +89,4 @@ class UserFragment : Fragment() {
         }
 
     }
-
-
 }

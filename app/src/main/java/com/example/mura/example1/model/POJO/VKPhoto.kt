@@ -1,4 +1,4 @@
-package com.example.mura.example1.model
+package com.example.mura.example1.model.POJO
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -47,12 +47,14 @@ data class VKPhoto(
         }
 
         fun parse(json: JSONObject)
-                = VKPhoto(id = json.optInt("id", 0),
+                = VKPhoto(
+            id = json.optInt("id", 0),
             ownerId = json.optInt("owner_id", 0),
             text = json.optString("text", ""),
             date = json.optInt("date", 0),
-            url =  (json.getJSONArray("sizes")).getJSONObject(0).optString("url",""),
-            likes_count = (json.getJSONObject("likes")).optInt("count",0))
+            url = (json.getJSONArray("sizes")).getJSONObject(0).optString("url", ""),
+            likes_count = (json.getJSONObject("likes")).optInt("count", 0)
+        )
     }
 
 

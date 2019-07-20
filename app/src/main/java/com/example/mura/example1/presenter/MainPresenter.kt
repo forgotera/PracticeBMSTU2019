@@ -6,7 +6,7 @@ import android.support.v4.content.ContextCompat.startActivity
 import android.util.Log
 import android.widget.ImageView
 import com.example.mura.example1.model.Requests
-import com.example.mura.example1.model.VKUser
+import com.example.mura.example1.model.POJO.VKUser
 import com.example.mura.example1.view.RecyclerFragmentView
 import com.example.mura.example1.view.UserActivity
 import com.squareup.picasso.Picasso
@@ -20,14 +20,13 @@ import io.reactivex.schedulers.Schedulers
 
 
 class MainPresenter(val view:RecyclerFragmentView) {
+    private val USER_ID = "userId"
     private val friendList: MutableList<VKUser> = arrayListOf()
-    val USER_ID = "userId"
-
     private val mRequests = Requests()
 
     // получаем список друзей
     fun getFriendList(){
-        val dataObservable: Observable<List<VKUser>> = mRequests.observable
+        val dataObservable: Observable<List<VKUser>> = mRequests.friendRequest()
         dataObservable
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
@@ -38,16 +37,6 @@ class MainPresenter(val view:RecyclerFragmentView) {
         return object : Observer<List<VKUser>> {
             override fun onComplete() {
                 view.updateUi(friendList)
-                /*
-                val imageObservable = ImageApi.create()
-                for(photo in friendList) {
-                    imageObservable.getImage(photo.photo)
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(getImageObserver())
-                }
-                */
-
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -80,35 +69,6 @@ class MainPresenter(val view:RecyclerFragmentView) {
         }
         startActivity(fragment!!,intent,null)
     }
-
-
-
-
-    /*
-    private fun getImageObserver(): Observer<ByteArray> {
-        return object : Observer<ByteArray> {
-            override fun onComplete() {
-            }
-
-            override fun onSubscribe(d: Disposable) {
-                Log.e("onSubscribe:", "$d")
-
-            }
-
-            override fun onNext(bitmapBytes: ByteArray) {
-                 val bitmap = BitmapFactory
-                    .decodeByteArray(bitmapBytes, 0, bitmapBytes.size)
-                val drawable = BitmapDrawable(bitmap)
-
-                Log.e("onNext:", "$bitmapBytes")
-            }
-
-            override fun onError(e: Throwable) {
-                Log.e("onError:", "$e")
-            }
-        }
-    }
-    */
 
 
 }

@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.mura.example1.model.*
+import com.example.mura.example1.model.POJO.VKUser
 import com.example.mura.example1.presenter.MainPresenter
 import kotlinx.android.synthetic.main.list_item.view.*
 
@@ -31,12 +31,6 @@ class RecyclerFragment : Fragment(), RecyclerFragmentView {
     private var mAdapter: FriendsListAdapter? = null
     private var presenter: MainPresenter? = null
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,14 +54,13 @@ class RecyclerFragment : Fragment(), RecyclerFragmentView {
         mAdapter!!.notifyDataSetChanged()
     }
 
-
-
     interface OnFriendClickListener{
         fun onFriendClick(vkUser: VKUser)
     }
 
     private inner class FriendsListAdapter(val friendList: MutableList<VKUser>): RecyclerView.Adapter<FriendsListAdapter.FriendsListHolder>(){
 
+        //нажатие по элементу
         private val mOnFriendClickListener: OnFriendClickListener? = object : OnFriendClickListener{
             override fun onFriendClick(vkUser: VKUser) {
                 presenter?.onFriendClick(context,vkUser)
@@ -91,7 +84,7 @@ class RecyclerFragment : Fragment(), RecyclerFragmentView {
             if(friendList[p1].photo != "") {
                 p0.bindDrawable(friendList[p1].photo)
             }
-            p0.mTextView.text = (friendList[p1]).firstName
+            p0.mTextView.text = ((friendList[p1]).firstName + " ${friendList[p1].lastName}")
 
         }
 
@@ -111,7 +104,6 @@ class RecyclerFragment : Fragment(), RecyclerFragmentView {
             val mTextView: TextView = mView.text
             val mPhotoView: ImageView = mView.photo
             fun bindDrawable(url:String){
-                //src пустое
                 presenter!!.getImage(url,mPhotoView)
             }
         }

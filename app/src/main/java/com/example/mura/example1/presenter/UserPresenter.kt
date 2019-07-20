@@ -3,9 +3,7 @@ package com.example.mura.example1.presenter
 import android.util.Log
 import android.widget.ImageView
 import com.example.mura.example1.model.Requests
-import com.example.mura.example1.model.VKPhoto
-import com.example.mura.example1.model.VKUser
-import com.example.mura.example1.view.UserActivity
+import com.example.mura.example1.model.POJO.VKPhoto
 import com.example.mura.example1.view.UserFragment
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
@@ -41,7 +39,7 @@ class UserPresenter(val view:UserFragment) {
             }
 
             override fun onNext(s: List<VKPhoto>) {
-                photoList+=s
+                photoList += s
                 Log.e("onNextUser:", "$s")
             }
 
@@ -55,15 +53,9 @@ class UserPresenter(val view:UserFragment) {
         Picasso.get()
             .load(url)
             .placeholder(com.example.mura.example1.R.drawable.baseline_photo_camera_black_18dp)
+            .resize(640,640)
+            .centerCrop()
             .into(mPhotoView)
-    }
-
-    fun onClickPhoto(){
-
-    }
-
-    fun getDescPhoto(){
-
     }
 
 

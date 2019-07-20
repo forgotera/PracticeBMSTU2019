@@ -1,4 +1,4 @@
-package com.example.mura.example1.model
+package com.example.mura.example1.model.POJO
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -40,10 +40,12 @@ data class VKUser(
         }
 
         fun parse(json: JSONObject)
-                = VKUser(id = json.optInt("id", 0),
+                = VKUser(
+            id = json.optInt("id", 0),
             firstName = json.optString("first_name", ""),
             lastName = json.optString("last_name", ""),
             photo = json.optString("photo_200", ""),
-            deactivated = json.optBoolean("deactivated", false))
+            deactivated = json.optBoolean("deactivated", false)
+        )
     }
 }
