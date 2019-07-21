@@ -7,3 +7,4 @@
 
 Использованные библиотеки:RxJava,RxAndroid,Picasso
 Api: VKAPI
+Архитектура:MVP
